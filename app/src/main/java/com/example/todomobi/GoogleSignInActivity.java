@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,7 +27,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements View.OnCl
     private FirebaseAuth mAuth;
 
     private TextView mStatusView;
-    private TextView mDetailView;
 
     // Choose authentication providers
     List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -45,7 +43,6 @@ public class GoogleSignInActivity extends AppCompatActivity implements View.OnCl
         mAuth = FirebaseAuth.getInstance();
 
         mStatusView = findViewById(R.id.status);
-        mDetailView = findViewById(R.id.detail);
 
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.signOutButton).setOnClickListener(this);
@@ -89,14 +86,12 @@ public class GoogleSignInActivity extends AppCompatActivity implements View.OnCl
         if (user != null) {
             // Signed in
             mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
-            mDetailView.setText(getString(R.string.id_fmt, user.getUid()));
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
         } else {
             // Signed out
             mStatusView.setText(R.string.signed_out);
-            mDetailView.setText(null);
 
             findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
             findViewById(R.id.signOutButton).setVisibility(View.GONE);
