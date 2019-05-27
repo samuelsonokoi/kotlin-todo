@@ -11,7 +11,9 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Demonstrate authentication using the FirebaseUI-Android library. This activity demonstrates
@@ -27,6 +29,12 @@ public class GoogleSignInActivity extends AppCompatActivity implements View.OnCl
 
     private TextView mStatusView;
     private TextView mDetailView;
+
+    // Choose authentication providers
+    List<AuthUI.IdpConfig> providers = Arrays.asList(
+            new AuthUI.IdpConfig.EmailBuilder().build(),
+            new AuthUI.IdpConfig.PhoneBuilder().build(),
+            new AuthUI.IdpConfig.GoogleBuilder().build());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +78,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements View.OnCl
         // possible customization see: https://github.com/firebase/firebaseui-android
         Intent intent = AuthUI.getInstance().createSignInIntentBuilder()
                 .setIsSmartLockEnabled(!BuildConfig.DEBUG)
-                .setAvailableProviders(Collections.singletonList(
-                        new AuthUI.IdpConfig.EmailBuilder().build()))
+                .setAvailableProviders(providers)
                 .setLogo(R.mipmap.ic_launcher)
                 .build();
 
