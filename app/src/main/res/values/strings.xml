@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Firebase Authentication</string>
+    <string name="app_name">MobiMove Task</string>
 
     <string name="label_google_sign_in">Firebase + Google Sign In</string>
     <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
@@ -83,12 +83,13 @@
     <string name="twitter_title_text">Twitter Login</string>
 
     <string name="firebaseui_status_fmt">Firebase User: %s</string>
-    <string name="firebaseui_title_text">FirebaseUI Auth</string>
+    <string name="firebaseui_title_text">Sign In To Continue</string>
 
     <string name="generic_title_text">Generic IDP Sign In\nwith Microsoft</string>
     <string name="msft_status_fmt">Microsoft User: %s</string>
 
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
 </resources>
 

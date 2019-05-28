@@ -1,7 +1,6 @@
 package com.example.todomobi;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.hololo.tutorial.library.Step;
@@ -35,6 +34,7 @@ public class MainActivity extends TutorialActivity {
     @Override
     public void finishTutorial() {
         // Open google sign when done with slides
+        setContentView(R.layout.activity_login);
     }
 
     @Override
