@@ -1,5 +1,6 @@
 package com.example.todomobi;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -34,7 +35,8 @@ public class MainActivity extends TutorialActivity {
     @Override
     public void finishTutorial() {
         // Open google sign when done with slides
-        setContentView(R.layout.activity_login);
+        Intent intent = new Intent(MainActivity.this, AuthActivity.class);
+        startActivity(intent);
     }
 
     @Override
