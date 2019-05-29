@@ -10,7 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -19,12 +26,14 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class FeedsActivity extends AppCompatActivity {
 
+    Button button;
+    private TextView displayName;
+    private FirebaseAuth mAuth;
     ListView rss_list;
     ArrayList<String> titles;
     ArrayList<String> descriptions;
@@ -35,6 +44,18 @@ public class FeedsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feeds);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+        button.findViewById(R.id.sign_out_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
+
+        displayName = findViewById(R.id.display_name);
 
         rss_list = findViewById(R.id.rss_list);
 
@@ -60,12 +81,30 @@ public class FeedsActivity extends AppCompatActivity {
         new HandleInBackground().execute();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null){
+            displayName.setText("Hello, " + user.getDisplayName());
+        }
+    }
+
     public InputStream inputStream(URL url){
         try {
             return url.openConnection().getInputStream();
         } catch (IOException e){
             return null;
         }
+    }
+
+    private void signOut() {
+        AuthUI.getInstance().signOut(this);
+        Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(FeedsActivity.this, AuthActivity.class);
+        startActivity(intent);
     }
 
     public class HandleInBackground extends AsyncTask<Integer, Void, Exception>{
