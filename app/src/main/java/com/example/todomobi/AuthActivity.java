@@ -57,6 +57,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 // Sign in succeeded
                 updateUI(mAuth.getCurrentUser());
+                Toast.makeText(this, "signed in as " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AuthActivity.this, FeedsActivity.class);
                 startActivity(intent);
             } else {
@@ -85,13 +86,14 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
+
+            // Open feeds if user is already logged in
+            Intent intent = new Intent(AuthActivity.this, FeedsActivity.class);
+            startActivity(intent);
         } else {
             // Signed out
-            mStatusView.setText(R.string.signed_out);
-            mDetailView.setText(null);
-
-            findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
-            findViewById(R.id.signOutButton).setVisibility(View.GONE);
+            Intent intent = new Intent(AuthActivity.this, AuthActivity.class);
+            startActivity(intent);
         }
     }
 
