@@ -14,20 +14,23 @@ public class MainActivity extends TutorialActivity {
         super.onCreate(savedInstanceState);
 
         addFragment(new Step.Builder()
-                .setTitle("This is header 1")
-                .setBackgroundColor(Color.parseColor("#FF0957")) // int background color
+                .setTitle("The beauty of photography")
+                .setContent("express yourself with images")
+                .setBackgroundColor(Color.parseColor("#90c030")) // int background color
                 .setDrawable(R.drawable.img1) // int top drawable
                 .build());
 
         addFragment(new Step.Builder()
-                .setTitle("This is header 2")
-                .setBackgroundColor(Color.parseColor("#FF0957")) // int background color
+                .setTitle("Researching with the right tool")
+                .setContent("make life easier")
+                .setBackgroundColor(Color.parseColor("#90c030")) // int background color
                 .setDrawable(R.drawable.img2) // int top drawable
                 .build());
 
         addFragment(new Step.Builder()
-                .setTitle("This is header 3")
-                .setBackgroundColor(Color.parseColor("#FF0957")) // int background color
+                .setTitle("The sea in it's beauty")
+                .setContent("peaceful and calm")
+                .setBackgroundColor(Color.parseColor("#90c030")) // int background color
                 .setDrawable(R.drawable.img3) // int top drawable
                 .build());
     }

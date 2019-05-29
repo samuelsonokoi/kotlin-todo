@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,11 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.signOutButton).setOnClickListener(this);
+
+        // Hide ActionBar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
 
     @Override
@@ -67,6 +73,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startSignIn() {
+
         Intent intent = AuthUI.getInstance().createSignInIntentBuilder()
                 .setIsSmartLockEnabled(!BuildConfig.DEBUG)
                 .setAvailableProviders(providers)
