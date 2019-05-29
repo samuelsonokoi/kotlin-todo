@@ -21,7 +21,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth;
 
     private TextView mStatusView;
-    private TextView mDetailView;
 
     // Choose authentication providers
     List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -37,7 +36,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuth.getInstance();
 
         mStatusView = findViewById(R.id.status);
-        mDetailView = findViewById(R.id.detail);
 
         findViewById(R.id.signInButton).setOnClickListener(this);
         findViewById(R.id.signOutButton).setOnClickListener(this);
@@ -57,7 +55,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 // Sign in succeeded
                 updateUI(mAuth.getCurrentUser());
-                Toast.makeText(this, "signed in as " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, String.format("signed in as %s", mAuth.getCurrentUser().getDisplayName()), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AuthActivity.this, FeedsActivity.class);
                 startActivity(intent);
             } else {
@@ -82,7 +80,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         if (user != null) {
             // Signed in
             mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
-            mDetailView.setText(getString(R.string.id_fmt, user.getUid()));
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);

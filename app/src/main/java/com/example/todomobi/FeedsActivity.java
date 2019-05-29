@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,21 +39,37 @@ public class FeedsActivity extends AppCompatActivity implements View.OnClickList
     ArrayList<String> descriptions;
     ArrayList<String> links;
     ArrayList<String> pubDates;
+    SwipeRefreshLayout pullToRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feeds);
 
+        // Hide ActionBar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
+        pullToRefresh = findViewById(R.id.pull_refresh);
+
+        //setting an setOnRefreshListener on the SwipeDownLayout
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            int refreshcounter = 1; //Counting how many times user have refreshed the layout
+
+            @Override
+            public void onRefresh() {
+                // render feeds when refreshed
+                new HandleInBackground().execute();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-
         findViewById(R.id.sign_out_btn).setOnClickListener(this);
-
         displayName = findViewById(R.id.display_name);
-
         rss_list = findViewById(R.id.rss_list);
-
         titles = new ArrayList<>();
         descriptions = new ArrayList<>();
         links = new ArrayList<>();
@@ -125,7 +142,7 @@ public class FeedsActivity extends AppCompatActivity implements View.OnClickList
             super.onPreExecute();
 
             // show progress dialog
-            progressDialog.setMessage("Loading RSS feeds, please wait...");
+            progressDialog.setMessage("Loading, please wait...");
             progressDialog.show();
         }
 
@@ -144,7 +161,7 @@ public class FeedsActivity extends AppCompatActivity implements View.OnClickList
                 xmlPullParser.setInput(inputStream(url), "UTF_8");
 
                 // set boolean value for when we are in an item tag
-                boolean insideItem = false;
+                boolean item = false;
 
                 // get the event type
                 int eventType = xmlPullParser.getEventType();
@@ -154,31 +171,31 @@ public class FeedsActivity extends AppCompatActivity implements View.OnClickList
 
                     if (eventType == XmlPullParser.START_TAG){
                         if (xmlPullParser.getName().equalsIgnoreCase("item")){
-                            insideItem = true;
+                            item = true;
                         } else if(xmlPullParser.getName().equalsIgnoreCase("title")){
                             // make sure we're inside the item
-                            if (insideItem){
+                            if (item){
                                 titles.add(xmlPullParser.nextText());
                             }
                         } else if(xmlPullParser.getName().equalsIgnoreCase("description")){
-                            if (insideItem){
+                            if (item){
                                 descriptions.add(xmlPullParser.nextText());
                             }
                         } else if(xmlPullParser.getName().equalsIgnoreCase("link")){
-                            if (insideItem){
+                            if (item){
                                 links.add(xmlPullParser.nextText());
                             }
                         } else if(xmlPullParser.getName().equalsIgnoreCase("pubDate")){
-                            if (insideItem){
+                            if (item){
                                 pubDates.add(xmlPullParser.nextText());
                             }
                         }
                     } else if(eventType == XmlPullParser.END_TAG && xmlPullParser.getName().equalsIgnoreCase("item")){
-                        insideItem = false;
+                        item = false;
                     }
 
                     // increment to next tag
-                    xmlPullParser.next();
+                    eventType = xmlPullParser.next();
 
                 }
 
@@ -201,7 +218,7 @@ public class FeedsActivity extends AppCompatActivity implements View.OnClickList
             progressDialog.dismiss();
 
             // Set adapter for list view
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(FeedsActivity.this,
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(FeedsActivity.this,
                     android.R.layout.simple_list_item_1, titles);
             rss_list.setAdapter(adapter);
         }

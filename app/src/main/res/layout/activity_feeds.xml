@@ -7,30 +7,35 @@
     android:orientation="vertical"
     tools:context=".FeedsActivity">
 
-
-    <TextView
-        android:id="@+id/display_name"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="50dp"
-        android:text="TextView" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/sign_out_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginBottom="10dp"
-        android:text="Sign Out">
+        <TextView
+            android:id="@+id/display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:text="TextView" />
 
-    </Button>
+        <Button
+            android:id="@+id/sign_out_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="260dp"
+            android:layout_marginBottom="10dp"
+            android:text="Sign Out" />
+
+    </RelativeLayout>
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/pull_refresh">
 
         <ListView
             android:id="@+id/rss_list"
