@@ -29,9 +29,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class FeedsActivity extends AppCompatActivity {
+public class FeedsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button button;
     private TextView displayName;
     private FirebaseAuth mAuth;
     ListView rss_list;
@@ -48,12 +47,7 @@ public class FeedsActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        button.findViewById(R.id.sign_out_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+        findViewById(R.id.sign_out_btn).setOnClickListener(this);
 
         displayName = findViewById(R.id.display_name);
 
@@ -89,6 +83,10 @@ public class FeedsActivity extends AppCompatActivity {
 
         if (user != null){
             displayName.setText("Hello, " + user.getDisplayName());
+        } else {
+            // Signed out
+            Intent intent = new Intent(FeedsActivity.this, AuthActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -105,6 +103,15 @@ public class FeedsActivity extends AppCompatActivity {
         Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(FeedsActivity.this, AuthActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.sign_out_btn:
+                signOut();
+                break;
+        }
     }
 
     public class HandleInBackground extends AsyncTask<Integer, Void, Exception>{
@@ -190,13 +197,13 @@ public class FeedsActivity extends AppCompatActivity {
         protected void onPostExecute(Exception s) {
             super.onPostExecute(s);
 
+            // Dismiss progress dialog
+            progressDialog.dismiss();
+
             // Set adapter for list view
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(FeedsActivity.this,
                     android.R.layout.simple_list_item_1, titles);
             rss_list.setAdapter(adapter);
-
-            // Dismiss progress dialog
-            progressDialog.dismiss();
         }
     }
 }

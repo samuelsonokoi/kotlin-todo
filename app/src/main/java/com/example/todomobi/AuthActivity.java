@@ -90,10 +90,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
             // Open feeds if user is already logged in
             Intent intent = new Intent(AuthActivity.this, FeedsActivity.class);
             startActivity(intent);
-        } else {
-            // Signed out
-            Intent intent = new Intent(AuthActivity.this, AuthActivity.class);
-            startActivity(intent);
         }
     }
 

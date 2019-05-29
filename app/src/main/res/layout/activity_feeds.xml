@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="200dp"
+        android:layout_marginLeft="50dp"
         android:text="TextView" />
 
     <Button
@@ -22,12 +22,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="310dp"
+        android:layout_marginLeft="200dp"
         android:layout_marginBottom="10dp"
-        android:text="Sign Out" />
+        android:text="Sign Out">
 
-    <ListView
-        android:id="@+id/rss_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    </Button>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/rss_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 </LinearLayout>
