@@ -2,7 +2,6 @@ package com.example.todomobi;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,8 +53,6 @@ public class FeedsActivity extends AppCompatActivity implements View.OnClickList
 
         //setting an setOnRefreshListener on the SwipeDownLayout
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            int refreshcounter = 1; //Counting how many times user have refreshed the layout
-
             @Override
             public void onRefresh() {
                 // render feeds when refreshed

@@ -79,7 +79,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             // Signed in
-            mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getEmail()));
+            mStatusView.setText(getString(R.string.firebaseui_status_fmt, user.getDisplayName()));
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
             findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
