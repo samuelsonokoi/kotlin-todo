@@ -1,4 +1,4 @@
-# kotlin-todo
+# Java-todo
 Todo application test for android developer role
 
 TODO v.1.0.0:
